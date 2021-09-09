@@ -30,9 +30,14 @@ const exampleMovies = require("./movies");
       "James and the Giant Peach",
     ];
  */
-function getAllMovieTitles() {}
+function getAllMovieTitles(movies) {
+  if(!movies.length) throw "The movies array is empty."
+  return movies.map((obj)=>obj.title);
+  
+}
 
 /**
+ * 
  * checkIfAnyMovieHasRating()
  * -----------------------------
  * Returns a boolean, representing whether or not any of the movies has been given the provided rating. If the inputted `movies` array is empty, throw an error with a message.
@@ -50,7 +55,10 @@ function getAllMovieTitles() {}
  *  checkIfAnyMovieHasRating(movies, "R");
  *  //> false
  */
-function checkIfAnyMovieHasRating() {}
+function checkIfAnyMovieHasRating(movies, rating="G") {
+  if(!movies.length) throw "The movie array is empty";
+  return movies.some((obj)=>obj.rated===rating);
+}
 
 /**
  * findById()
@@ -68,7 +76,12 @@ function checkIfAnyMovieHasRating() {}
       // Toy Story 4
     };
  */
-function findById() {}
+function findById(movies, id) {
+  if(!movies.length) throw "The movie array is empty";
+  let foundMovie = movies.find((obj)=>obj.imdbID===id);
+  return (!foundMovie) ? null:foundMovie;
+
+}
 
 /**
  * filterByGenre()
@@ -92,7 +105,11 @@ function findById() {}
  *  filterByGenre(movies, "Horror")
  *  //> []
  */
-function filterByGenre() {}
+function filterByGenre(movies, genre) {
+  if(!movies.length) throw "The movie array is empty";
+  let filteredMovies = movies.filter((obj)=>obj.genre.toLowerCase().split(", ").includes(genre.toLowerCase()));
+  return (!filteredMovies.length) ? []:filteredMovies;
+}
 
 /**
  * getAllMoviesReleasedAtOrBeforeYear()
@@ -118,7 +135,11 @@ function filterByGenre() {}
       }
     ];
  */
-function getAllMoviesReleasedAtOrBeforeYear() {}
+function getAllMoviesReleasedAtOrBeforeYear(movies, year) {
+  if(!movies.length) throw "The movie array is empty";
+  return movies.filter((obj)=> Number(obj.released.split(" ")[2]) <= year);
+
+}
 
 /**
  * getRottenTomatoesScoreByMovie()
@@ -144,7 +165,10 @@ function getAllMoviesReleasedAtOrBeforeYear() {}
       { "James and the Giant Peach": "91%" },
     ];
  */
-function getRottenTomatoesScoreByMovie() {}
+function getRottenTomatoesScoreByMovie(movies) {
+  if(!movies.length) throw "The movie array is empty";
+  return movies.map((obj)=> ({[obj.title]: obj.ratings.find((subObj)=>subObj.source==="Rotten Tomatoes")["value"]}));
+}
 
 // Do not change anything below this line.
 module.exports = {
